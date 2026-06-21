@@ -164,7 +164,7 @@ export default function Navbar() {
       </div>
 
       {/* SECONDARY NAV — desktop only */}
-      <div className="hidden md:block bg-white border-b border-slate-100 shadow-sm">
+      <div className="hidden md:block bg-[#edf5e1] border-b border-slate-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4">
           <nav className="flex items-center gap-1 h-10">
             <Link href="/" className="text-sm text-slate-600 hover:text-[#008854] hover:bg-slate-50 px-3 py-1.5 rounded-md transition-colors">
