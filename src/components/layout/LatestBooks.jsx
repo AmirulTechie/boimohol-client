@@ -11,7 +11,7 @@ export default function LatestBooks({ books = [] }) {
     console.log("books prop:", books);
     const latest = books.slice(0, 5);
   return (
-    <section className="bg-[#f5f5eb] py-16">
+    <section className="py-16">
       <div className="max-w-6xl mx-auto px-4">
 
         {/* Section heading */}
