@@ -15,6 +15,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeOff, BookOpen, User, Mail, Lock, ImageIcon, ChevronRight } from "lucide-react";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,23 +29,24 @@ export default function RegisterPage() {
   } = useForm();
 
   const password = watch("password");
-
+  const router = useRouter();
   const onSubmit = async (data) => {
-    const {name, email, password, photoURL} = data;
-    const { data: user, error } = await authClient.signUp.email({
+  const { name, email, password, photoURL } = data;
+  const { data: user, error } = await authClient.signUp.email({
     name,
     email,
     password,
     image: photoURL,
-    });
+  });
 
   if (error) {
-  toast.error(error.message || "Registration failed.");
-  return;
+    toast.error(error.message || "Registration failed.");
+    return;
   }
 
-  toast.success("Account created! Welcome to Boimohol 🎉");
-  };
+  toast.success("Account created! Choose your role.");
+  router.push("/auth/select-role");
+};
 
   const handleGoogleSignIn = async () => {
     // TODO: Better Auth Google OAuth
