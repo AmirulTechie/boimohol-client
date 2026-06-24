@@ -1,9 +1,12 @@
 import BannerSection from "@/components/home/Banners";
+import LatestBooks from "@/components/layout/LatestBooks";
+import books from "@/data/data.json"
 
 export default function HomePage() {
   return (
-    <main className="max-w-7xl mx-auto px-4">
-        <BannerSection></BannerSection>
+    <main>
+      <BannerSection />
+      <LatestBooks books={books} />
     </main>
   );
 }
