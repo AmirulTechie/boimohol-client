@@ -189,7 +189,7 @@ export default function BrowsePage() {
               <button
                 key={cat}
                 onClick={() => handleFilterChange(() => setCategory(cat))}
-                className={`text-xs font-medium px-4 py-1.5 rounded-full border transition-colors ${
+                className={`text-xs font-medium px-4 py-1.5 rounded-full border transition-colors cursor-pointer ${
                   category === cat
                     ? "bg-[#008854] text-white border-[#008854]"
                     : "bg-white text-slate-600 border-slate-200 hover:border-[#008854] hover:text-[#008854]"

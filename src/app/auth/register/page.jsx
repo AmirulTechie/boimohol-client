@@ -13,6 +13,8 @@ import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeOff, BookOpen, User, Mail, Lock, ImageIcon, ChevronRight } from "lucide-react";
+import toast from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,8 +30,20 @@ export default function RegisterPage() {
   const password = watch("password");
 
   const onSubmit = async (data) => {
-    // TODO: wire up Better Auth
-    console.log(data);
+    const {name, email, password, photoURL} = data;
+    const { data: user, error } = await authClient.signUp.email({
+    name,
+    email,
+    password,
+    image: photoURL,
+    });
+
+  if (error) {
+  toast.error(error.message || "Registration failed.");
+  return;
+  }
+
+  toast.success("Account created! Welcome to Boimohol 🎉");
   };
 
   const handleGoogleSignIn = async () => {

@@ -13,20 +13,20 @@ import {
   IconChevronDown,
 } from "@tabler/icons-react";
 import { GiSchoolBag } from "react-icons/gi";
+import { authClient } from "@/lib/auth-client";
 
-const useAuth = () => {
-  return { user: null, role: null };
-};
 
 export default function Navbar() {
-  const { user, role } = useAuth();
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user ?? null;
+  const role = session?.user?.role ?? null;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
   const pathname = usePathname();
   const isHome = pathname === "/";
-
+  
   useEffect(() => {
     const handleScroll = () => {
       const current = window.scrollY;
@@ -123,23 +123,38 @@ export default function Navbar() {
           )}
 
           <div className="flex items-center gap-4 shrink-0">
-            <Link href="/cart" className="relative flex items-center text-white hover:text-green-200 transition-colors" aria-label="Cart">
-              <GiSchoolBag size={24} />
-              <span className="absolute -top-2 -right-2 w-4 h-4 bg-white text-[#0F6E56] text-[10px] font-semibold rounded-full flex items-center justify-center">0</span>
-            </Link>
+  <Link href="/cart" className="relative flex items-center text-white hover:text-green-200 transition-colors" aria-label="Cart">
+    <GiSchoolBag size={24} />
+    <span className="absolute -top-2 -right-2 w-4 h-4 bg-white text-[#0F6E56] text-[10px] font-semibold rounded-full flex items-center justify-center">0</span>
+  </Link>
 
-            {user ? (
-              <Link href={getDashboardLink()} className="hidden md:flex items-center gap-1.5 text-sm font-medium text-white hover:text-green-200 transition-colors">
-                <IconUser size={18} stroke={1.5} />
-                Dashboard
-              </Link>
-            ) : (
-              <div className="hidden md:flex items-center gap-2">
-                <Link href="/auth/login" className="text-sm font-medium text-white hover:text-green-200 transition-colors px-2 py-1.5">Log in</Link>
-                <Link href="/auth/register" className="text-sm font-medium bg-white text-[#0F6E56] hover:bg-green-50 transition-colors px-4 py-1.5 rounded-lg">Get started</Link>
-              </div>
-            )}
-          </div>
+  {isPending ? (
+    <div className="hidden md:flex items-center gap-2">
+      <div className="w-16 h-7 bg-white/20 rounded-lg animate-pulse" />
+      <div className="w-24 h-7 bg-white/20 rounded-lg animate-pulse" />
+    </div>
+  ) : user ? (
+    <Link href={'/profile/user'} className="hidden md:flex items-center gap-1.5 text-sm font-medium text-white hover:text-green-200 transition-colors">
+  {user.image ? (
+    <Image
+      src={user.image}
+      alt={user.name ?? "User avatar"}
+      width={30}
+      height={30}
+      className="rounded-full object-cover"
+    />
+  ) : (
+    <IconUser size={18} stroke={1.5} />
+  )}
+  My Account
+</Link>
+  ) : (
+    <div className="hidden md:flex items-center gap-2">
+      <Link href="/auth/login" className="text-sm font-medium text-white hover:text-green-200 transition-colors px-2 py-1.5">Log in</Link>
+      <Link href="/auth/register" className="text-sm font-medium bg-white text-[#0F6E56] hover:bg-green-50 transition-colors px-4 py-1.5 rounded-lg">Get started</Link>
+    </div>
+  )}
+</div>
         </div>
 
         {/* Mobile search — home only */}

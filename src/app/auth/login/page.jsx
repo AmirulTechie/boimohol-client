@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeOff, BookOpen, Mail, Lock, ChevronRight } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,8 +18,17 @@ export default function LoginPage() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // TODO: wire up Better Auth email/password sign in
-    console.log(data);
+    const {email, password} = data;
+    const { data:user, error } = await authClient.signIn.email({
+    email: email,
+    password: password,
+    rememberMe: true,
+    callbackURL: '/',
+    if(error){
+      toast.error(error || "Something went wrong!")
+    }
+    });
+    toast.success("Login Sucessful!")
   };
 
   const handleGoogleSignIn = async () => {
@@ -198,7 +209,7 @@ export default function LoginPage() {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center gap-2 bg-[#008854] hover:bg-[#0a5c46] text-white font-medium py-3 rounded-xl text-sm transition mt-2 disabled:opacity-60"
+              className="w-full flex items-center justify-center gap-2 bg-[#008854] hover:bg-[#0a5c46] text-white font-medium py-3 rounded-xl text-sm transition mt-2 disabled:opacity-60 cursor-pointer"
             >
               {isSubmitting ? "Logging in..." : "Log in"}
               {!isSubmitting && <ChevronRight size={16} />}

@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono, Dancing_Script, Rozha_One } from "next/font/google";
 import "./globals.css";
+import Providers from "@/providers/Providers";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -12,7 +13,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${rozhaOne.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#fdf8f1]">
+        <Providers>
         {children}
+        </Providers>
       </body>
     </html>
   );
