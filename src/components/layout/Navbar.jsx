@@ -13,8 +13,7 @@ import {
   IconChevronDown,
 } from "@tabler/icons-react";
 import { GiSchoolBag } from "react-icons/gi";
-import { authClient } from "@/lib/auth-client";
-
+import { authClient, useSession } from "@/lib/auth-client";
 
 export default function Navbar() {
   const { data: session, isPending } = authClient.useSession();
@@ -65,7 +64,7 @@ export default function Navbar() {
       isActive ? "text-[#008854] font-semibold" : "text-slate-700 hover:text-[#008854]"
     }`;
   };
-
+  console.log(session);
   return (
     <motion.header
       className="w-full sticky top-0 z-50"
