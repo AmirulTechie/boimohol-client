@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { motion } from "motion/react";
 import { useSession } from "@/lib/auth-client";
@@ -81,7 +82,7 @@ export default function UserDashboard() {
           const Icon = s.icon;
           return (
             <div key={s.label} className="bg-white rounded-2xl p-5 flex items-center gap-4 shadow-sm">
-              <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${s.color}`}>
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${s.color}`}>
                 <Icon size={20} />
               </div>
               <div>
@@ -153,7 +154,7 @@ export default function UserDashboard() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {readingList.map((book) => (
             <div key={book.id} className="group flex flex-col items-center text-center gap-2">
-              <div className="relative w-full aspect-[3/4] rounded-xl overflow-hidden bg-gray-100 shadow-sm group-hover:shadow-md transition">
+              <div className="relative w-full aspect-3/4 rounded-xl overflow-hidden bg-gray-100 shadow-sm group-hover:shadow-md transition">
                 <Image
                   src={book.cover}
                   alt={book.title}
@@ -190,7 +191,7 @@ export default function UserDashboard() {
                 <p className="text-xs text-gray-500 leading-relaxed">{r.comment}</p>
                 <p className="text-xs text-gray-400 mt-1">{r.date}</p>
               </div>
-              <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="flex items-center gap-2 shrink-0">
                 <button className="p-1.5 rounded-lg hover:bg-white transition text-gray-400 hover:text-[#008854]">
                   <Pencil size={14} />
                 </button>
