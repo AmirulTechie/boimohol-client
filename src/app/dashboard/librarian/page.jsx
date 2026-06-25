@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
@@ -284,7 +285,7 @@ export default function LibrarianDashboard() {
           const Icon = s.icon;
           return (
             <div key={s.label} className="bg-white rounded-2xl p-5 flex items-center gap-4 shadow-sm">
-              <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${s.color}`}>
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${s.color}`}>
                 <Icon size={20} />
               </div>
               <div>
@@ -335,7 +336,7 @@ export default function LibrarianDashboard() {
                     />
                   </div>
                 </div>
-                <span className="text-xs text-gray-400 flex-shrink-0">{b.requests}</span>
+                <span className="text-xs text-gray-400 shrink-0">{b.requests}</span>
               </div>
             ))}
           </div>

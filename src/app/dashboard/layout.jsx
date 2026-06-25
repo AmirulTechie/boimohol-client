@@ -64,7 +64,7 @@ export default function DashboardLayout({ children }) {
     <div className="flex flex-col h-full">
       {/* Logo */}
       <Link href={'/'} className={`flex items-center gap-2 px-4 py-5 border-b border-gray-100 ${collapsed ? "justify-center" : ""}`}>
-        <BookOpen size={22} className="text-[#008854] flex-shrink-0" />
+        <BookOpen size={22} className="text-[#008854] shrink-0" />
         <AnimatePresence>
           {!collapsed && (
             <motion.span
@@ -95,7 +95,7 @@ export default function DashboardLayout({ children }) {
                   : "text-gray-600 hover:bg-[#008854]/8 hover:text-[#008854]"
               } ${collapsed ? "justify-center" : ""}`}
             >
-              <Icon size={18} className="flex-shrink-0" />
+              <Icon size={18} className="shrink-0" />
               <AnimatePresence>
                 {!collapsed && (
                   <motion.span
@@ -125,10 +125,10 @@ export default function DashboardLayout({ children }) {
               alt={user.name}
               width={20}
               height={20}
-              className="rounded-full flex-shrink-0 w-5 h-5 object-cover"
+              className="rounded-full shrink-0 w-5 h-5 object-cover"
             />
           ) : (
-            <User size={18} className="flex-shrink-0" />
+            <User size={18} className="shrink-0" />
           )}
           <AnimatePresence>
             {!collapsed && (
@@ -148,7 +148,7 @@ export default function DashboardLayout({ children }) {
           onClick={handleLogout}
           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-all ${collapsed ? "justify-center" : ""}`}
         >
-          <LogOut size={18} className="flex-shrink-0" />
+          <LogOut size={18} className="shrink-0" />
           <AnimatePresence>
             {!collapsed && (
               <motion.span
@@ -172,7 +172,7 @@ export default function DashboardLayout({ children }) {
       <motion.aside
         animate={{ width: collapsed ? 64 : 220 }}
         transition={{ duration: 0.25, ease: "easeInOut" }}
-        className="hidden lg:flex flex-col bg-white border-r border-gray-100 relative flex-shrink-0 sticky top-0 h-screen overflow-hidden"
+        className="hidden lg:flex flex-col bg-white border-r border-gray-100 relative shrink-0 top-0 h-screen overflow-hidden"
       >
         <SidebarContent />
       </motion.aside>
@@ -193,7 +193,7 @@ export default function DashboardLayout({ children }) {
               animate={{ x: 0 }}
               exit={{ x: -240 }}
               transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="fixed top-0 left-0 h-full w-[220px] bg-white z-30 lg:hidden flex flex-col shadow-xl"
+              className="fixed top-0 left-0 h-full w-55 bg-white z-30 lg:hidden flex flex-col shadow-xl"
             >
               <SidebarContent />
             </motion.aside>

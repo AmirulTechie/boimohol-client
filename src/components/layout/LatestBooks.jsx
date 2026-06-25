@@ -5,11 +5,22 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { FiArrowRight } from "react-icons/fi";
 import BookCard from "@/components/shared/BookCard";
+import { GetAllBooks } from "@/lib/actions/books";
+import { useEffect, useState } from "react";
 
-export default function LatestBooks({ books = [] }) {
-  
-    console.log("books prop:", books);
-    const latest = books.slice(0, 5);
+export default function LatestBooks() {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    const loadBooks = async () => {
+      const data = await GetAllBooks();
+      setBooks(data);
+    };
+
+    loadBooks();
+  }, []);
+
+  const latest = books.slice(0, 5);
   return (
     <section className="py-16">
       <div className="max-w-6xl mx-auto px-4">
@@ -31,7 +42,7 @@ export default function LatestBooks({ books = [] }) {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
             style={{ transformOrigin: "left" }}
-            className="mt-2 h-[3px] w-16 bg-[#008854] rounded-full"
+            className="mt-2 h-0.75 w-16 bg-[#008854] rounded-full"
           />
         </div>
 
