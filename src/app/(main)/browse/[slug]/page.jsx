@@ -97,12 +97,12 @@ export default function BookDetailsPage({ params }) {
         <div className="flex flex-col lg:flex-row gap-10">
 
           {/* Left — cover + related */}
-          <div className="flex flex-col gap-6 lg:w-[280px] flex-shrink-0">
+          <div className="flex flex-col gap-6 lg:w-70-shrink-0">
   <motion.div
     initial={{ opacity: 0, y: 12 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.4 }}
-    className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5"
+    className="relative w-full aspect-3/4 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5"
   >
     <Image
       src={book.coverImage}
@@ -126,7 +126,7 @@ export default function BookDetailsPage({ params }) {
                       href={`/browse/${normalize(b._id)}`}
                       className="flex items-center gap-3 group"
                     >
-                      <div className="relative w-10 h-14 rounded-lg overflow-hidden flex-shrink-0 shadow-sm">
+                      <div className="relative w-10 h-14 rounded-lg overflow-hidden shrink-0ow-sm">
                         <Image src={b.coverImage} alt={b.title} fill className="object-cover" />
                       </div>
                       <div className="min-w-0">
@@ -187,7 +187,7 @@ export default function BookDetailsPage({ params }) {
                 const Icon = row.icon;
                 return (
                   <div key={row.label} className={`flex items-center gap-4 px-5 py-3 text-sm ${i !== 0 ? "border-t border-gray-100" : ""}`}>
-                    <div className="flex items-center gap-2 w-32 flex-shrink-0 text-gray-400">
+                    <div className="flex items-center gap-2 w-32 shrink-0 text-gray-400">
                       <Icon size={14} />
                       <span className="text-xs font-medium">{row.label}</span>
                     </div>

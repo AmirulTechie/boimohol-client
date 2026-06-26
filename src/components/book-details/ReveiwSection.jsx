@@ -66,7 +66,7 @@ function ReviewCard({ review }) {
       animate={{ opacity: 1, y: 0 }}
       className="flex gap-4 py-5 border-b border-gray-100 last:border-0"
     >
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         {review.userImage ? (
           <div className="relative w-9 h-9 rounded-full overflow-hidden">
             <Image src={review.userImage} alt={review.userName} fill className="object-cover" />
@@ -160,7 +160,7 @@ export default function ReviewSection({ bookId }) {
         </div>
 
         {/* Submit form */}
-        <div className="lg:w-80 flex-shrink-0">
+        <div className="lg:w-80 shrink-0">
           <div className="bg-white rounded-2xl p-6 shadow-sm sticky top-6">
             <h3 className="text-sm font-bold text-[#0a5c46] mb-4">
               {session ? "Leave a Review" : "Log in to leave a review"}
