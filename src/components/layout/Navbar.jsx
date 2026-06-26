@@ -39,7 +39,6 @@ export default function Navbar() {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      console.log("Search:", searchQuery);
     }
   };
 
@@ -64,7 +63,6 @@ export default function Navbar() {
       isActive ? "text-[#008854] font-semibold" : "text-slate-700 hover:text-[#008854]"
     }`;
   };
-  console.log(session);
   return (
     <motion.header
       className="w-full sticky top-0 z-50"

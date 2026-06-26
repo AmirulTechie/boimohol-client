@@ -3,8 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function BookCard({ book }) {
+  function toSlug(title, author) {
+  return `${title}-by-${author}`
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")  // replace anything non-alphanumeric with -
+    .replace(/^-|-$/g, "");        // trim leading/trailing dashes
+}
+
   const { title, author, category, coverImage, deliveryFee, status, _id } = book;
-  const href = _id ? `/books/${_id}` : "#";
+  const href = title && author ? `/browse/${toSlug(title, author)}` : "#";
 
   return (
     <Link
@@ -12,7 +19,7 @@ export default function BookCard({ book }) {
       className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col h-full w-full"
     >
       {/* Cover Image */}
-      <div className="relative w-full aspect-[2/3] bg-white p-3 shrink-0 overflow-hidden">
+      <div className="relative w-full aspect-2/3 bg-white p-3 shrink-0 overflow-hidden">
         <div className="relative w-full h-full">
           <Image
             src={coverImage}
