@@ -81,7 +81,7 @@ function AddBookModal({ onClose }) {
   const handleImage = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024){
+    if (file.size > 10 * 1024 * 1024){
         toast.error('Image size could not be bigger than 5MB');
         return;
     }

@@ -85,7 +85,7 @@ export default function BrowseClient({ books }) {
   const [page, setPage] = useState(1);
 
   const filtered = useMemo(() => {
-    let result = [...books];
+    let result = [...books].filter((b) => b.status !== "Pending Approval");
 
     if (search.trim()) {
       const q = search.toLowerCase();

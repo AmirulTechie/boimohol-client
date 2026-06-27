@@ -97,22 +97,31 @@ export default function BookDetailsPage({ params }) {
         <div className="flex flex-col lg:flex-row gap-10">
 
           {/* Left — cover + related */}
-          <div className="flex flex-col gap-6 lg:w-70-shrink-0">
-  <motion.div
-    initial={{ opacity: 0, y: 12 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.4 }}
-    className="relative w-full aspect-3/4 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5"
-  >
-    <Image
-      src={book.coverImage}
-      alt={book.title}
-      fill
-      className="object-cover object-top"
-      sizes="(max-width: 1024px) 90vw, 280px"
-      priority
-    />
-  </motion.div>
+          <div className="flex flex-col gap-6 w-full lg:w-70nk-0">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="relative w-full aspect-3/4 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5"
+            >
+              {/* Blurred background fill */}
+              <Image
+                src={book.coverImage}
+                alt=""
+                fill
+                className="object-cover scale-110 blur-xl opacity-60"
+                aria-hidden="true"
+              />
+              {/* Actual cover — contained, never cropped */}
+              <Image
+                src={book.coverImage}
+                alt={book.title}
+                fill
+                className="object-contain relative z-10 drop-shadow-lg"
+                sizes="(max-width: 1024px) 90vw, 280px"
+                priority
+              />
+            </motion.div>
 
             {relatedBooks.length > 0 && (
               <div>
@@ -126,7 +135,7 @@ export default function BookDetailsPage({ params }) {
                       href={`/browse/${normalize(b._id)}`}
                       className="flex items-center gap-3 group"
                     >
-                      <div className="relative w-10 h-14 rounded-lg overflow-hidden shrink-0ow-sm">
+                      <div className="relative w-10 h-14 rounded-lg overflow-hidden shrink-0 shadow-sm">
                         <Image src={b.coverImage} alt={b.title} fill className="object-cover" />
                       </div>
                       <div className="min-w-0">

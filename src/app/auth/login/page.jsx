@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,20 +16,26 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({
+    defaultValues: { email: "", password: "" },
+  });
 
   const onSubmit = async (data) => {
-    const {email, password} = data;
-    const { data:user, error } = await authClient.signIn.email({
-    email: email,
-    password: password,
-    rememberMe: true,
-    callbackURL: '/',
-    if(error){
-      toast.error(error || "Something went wrong!")
-    }
+    const { email, password } = data;
+
+    const { error } = await authClient.signIn.email({
+      email,
+      password,
+      rememberMe: true,
+      callbackURL: "/",
     });
-    toast.success("Login Sucessful!")
+
+    if (error) {
+      toast.error(error.message || "Invalid email or password.");
+      return;
+    }
+
+    toast.success("Login successful!");
   };
 
   const handleGoogleSignIn = async () => {
