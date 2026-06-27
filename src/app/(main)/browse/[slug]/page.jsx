@@ -10,6 +10,7 @@ import {
 import ReviewSection from "@/components/book-details/ReveiwSection";
 import { useEffect, useState, use } from "react";
 import { GetAllBooks } from "@/lib/actions/books";
+import { toSlug } from "@/lib/utils/slug";
 
 const normalize = (id) => {
   if (!id) return "";
@@ -37,7 +38,7 @@ export default function BookDetailsPage({ params }) {
     loadBooks();
   }, []);
 
-  const book = books.find((b) => normalize(b._id) === slug);
+  const book = books.find((b) => toSlug(b.title) === slug);
 
   const user = session?.user;
 
@@ -56,7 +57,7 @@ export default function BookDetailsPage({ params }) {
   const isCheckedOut = book?.status === "Checked Out";
 
   const relatedBooks = book
-    ? books.filter((b) => normalize(b._id) !== slug && b.category === book.category).slice(0, 4)
+    ? books.filter((b) => toSlug(b.title) !== slug && b.category === book.category).slice(0, 4)
     : [];
 
   const handleRequestDelivery = () => {};
@@ -97,12 +98,12 @@ export default function BookDetailsPage({ params }) {
         <div className="flex flex-col lg:flex-row gap-10">
 
           {/* Left — cover + related */}
-          <div className="flex flex-col gap-6 w-full lg:w-70nk-0">
+          <div className="flex flex-col gap-6 w-full lg:w-[280px] shrink-0">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="relative w-full aspect-3/4 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5"
+              className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5"
             >
               {/* Blurred background fill */}
               <Image
@@ -132,7 +133,7 @@ export default function BookDetailsPage({ params }) {
                   {relatedBooks.map((b) => (
                     <Link
                       key={normalize(b._id)}
-                      href={`/browse/${normalize(b._id)}`}
+                      href={`/browse/${toSlug(b.title)}`}
                       className="flex items-center gap-3 group"
                     >
                       <div className="relative w-10 h-14 rounded-lg overflow-hidden shrink-0 shadow-sm">

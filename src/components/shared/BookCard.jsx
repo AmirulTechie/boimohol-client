@@ -1,10 +1,11 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { toSlug } from "@/lib/utils/slug";
 
 export default function BookCard({ book }) {
-  const { title, author, category, coverImage, deliveryFee, status, _id } = book;
-  const href = _id ? `/browse/${_id}` : "#";
+  const { title, author, category, coverImage, deliveryFee, status } = book;
+  const href = title ? `/browse/${toSlug(title)}` : "#";
 
   return (
     <Link
