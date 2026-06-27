@@ -103,10 +103,10 @@ export default function AdminUsers() {
                             </span>
                           </div>
                         )}
-                        <span className="font-medium text-[#0a5c46] truncate max-w-[100px]">{u.name}</span>
+                        <span className="font-medium text-[#0a5c46] truncate max-w-25">{u.name}</span>
                       </div>
                     </td>
-                    <td className="py-3 text-gray-500 truncate max-w-[180px]">{u.email}</td>
+                    <td className="py-3 text-gray-500 truncate max-w-45">{u.email}</td>
                     <td className="py-3"><RoleBadge role={u.role ?? "user"} /></td>
                     <td className="py-3 text-gray-400 text-xs">
                       {u.createdAt
