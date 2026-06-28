@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/incompatible-library */
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const getStrength = (val = "") => {
@@ -9,6 +10,7 @@ const getStrength = (val = "") => {
     return { label: "Medium", color: "bg-yellow-400", text: "text-yellow-600", width: "66%" };
   return { label: "Strong", color: "bg-green-500", text: "text-green-600", width: "100%" };
 };
+
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
@@ -19,34 +21,57 @@ import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [showConfirm, setShowConfirm]   = useState(false);
 
+  // ── Seed defaultValues from sessionStorage so remounts don't wipe the form
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm();
-
-  const password = watch("password");
-  const router = useRouter();
-  const onSubmit = async (data) => {
-  const { name, email, password, photoURL } = data;
-  const { data: user, error } = await authClient.signUp.email({
-    name,
-    email,
-    password,
-    image: photoURL,
+  } = useForm({
+    defaultValues: {
+      name:     typeof window !== "undefined" ? sessionStorage.getItem("reg_name")  || "" : "",
+      email:    typeof window !== "undefined" ? sessionStorage.getItem("reg_email") || "" : "",
+      photoURL: typeof window !== "undefined" ? sessionStorage.getItem("reg_photo") || "" : "",
+    },
   });
 
-  if (error) {
-    toast.error(error.message || "Registration failed.");
-    return;
-  }
+  const password = watch("password");
+  const router   = useRouter();
 
-  toast.success("Account created! Choose your role.");
-  router.push("/auth/select-role");
-};
+  // ── Persist non-sensitive fields while user types
+  const watchedName  = watch("name");
+  const watchedEmail = watch("email");
+  const watchedPhoto = watch("photoURL");
+
+  useEffect(() => { sessionStorage.setItem("reg_name",  watchedName  || ""); }, [watchedName]);
+  useEffect(() => { sessionStorage.setItem("reg_email", watchedEmail || ""); }, [watchedEmail]);
+  useEffect(() => { sessionStorage.setItem("reg_photo", watchedPhoto || ""); }, [watchedPhoto]);
+
+  // ── Submit
+  const onSubmit = async (data) => {
+    const { name, email, password, photoURL } = data;
+    const { error } = await authClient.signUp.email({
+      name,
+      email,
+      password,
+      image: photoURL,
+    });
+
+    if (error) {
+      toast.error(error.message || "Registration failed.");
+      return;
+    }
+
+    // Clear persisted fields on success
+    sessionStorage.removeItem("reg_name");
+    sessionStorage.removeItem("reg_email");
+    sessionStorage.removeItem("reg_photo");
+
+    toast.success("Account created! Choose your role.");
+    router.push("/auth/select-role");
+  };
 
   const handleGoogleSignIn = async () => {
     // TODO: Better Auth Google OAuth
@@ -56,7 +81,6 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-[#f5f5eb] flex">
       {/* Left panel — decorative */}
       <div className="hidden lg:flex flex-col justify-between w-[42%] bg-[#008854] px-12 py-14 relative overflow-hidden">
-        {/* Background pattern */}
         <div className="absolute inset-0 opacity-10">
           {[...Array(6)].map((_, i) => (
             <div
@@ -111,7 +135,6 @@ export default function RegisterPage() {
 
       {/* Right panel — form */}
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-12">
-        {/* Mobile logo */}
         <Link href="/" className="flex items-center gap-2 mb-8 lg:hidden">
           <BookOpen size={24} className="text-[#008854]" />
           <span className="font-dance text-xl text-[#008854] font-bold">Boimohol</span>
@@ -131,7 +154,6 @@ export default function RegisterPage() {
             </Link>
           </p>
 
-          {/* Google OAuth */}
           <motion.button
             whileTap={{ scale: 0.98 }}
             onClick={handleGoogleSignIn}
@@ -235,7 +257,6 @@ export default function RegisterPage() {
                   {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                 </button>
               </div>
-              {/* Strength bar */}
               {watch("password") && (() => {
                 const s = getStrength(watch("password"));
                 return (
