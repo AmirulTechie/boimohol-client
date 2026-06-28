@@ -1,10 +1,9 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { Trash2, CheckCircle, ShieldCheck, Library } from "lucide-react";
+import { Trash2, Library } from "lucide-react";
 import toast from "react-hot-toast";
-import { GetAllBooks } from "@/lib/actions/books";
-import { UpdateBookStatus, DeleteBook } from "@/lib/actions/admin";
+import { GetAllBooks, UpdateBook, DeleteBook } from "@/lib/actions/books";
 
 const normalize = (id) => {
   if (!id) return "";
@@ -37,30 +36,39 @@ export default function AdminBooks() {
       .finally(() => setLoading(false));
   }, []);
 
-  const pendingBooks = useMemo(() => books.filter((b) => b.status === "Pending Approval"), [books]);
-
-  const handleApprove = async (bookId) => {
+  const handlePublish = async (id) => {
     try {
-      await UpdateBookStatus(bookId, "Published");
-      setBooks((prev) => prev.map((b) => normalize(b._id) === bookId ? { ...b, status: "Published" } : b));
-      toast.success("Book approved and published.");
-    } catch { toast.error("Failed to approve."); }
+      await UpdateBook(id, { status: "Published" });
+      setBooks((prev) =>
+        prev.map((b) => normalize(b._id) === id ? { ...b, status: "Published" } : b)
+      );
+      toast.success("Book published.");
+    } catch {
+      toast.error("Failed to publish.");
+    }
   };
 
-  const handleUnpublish = async (bookId) => {
+  const handleUnpublish = async (id) => {
     try {
-      await UpdateBookStatus(bookId, "Unpublished");
-      setBooks((prev) => prev.map((b) => normalize(b._id) === bookId ? { ...b, status: "Unpublished" } : b));
+      await UpdateBook(id, { status: "Unpublished" });
+      setBooks((prev) =>
+        prev.map((b) => normalize(b._id) === id ? { ...b, status: "Unpublished" } : b)
+      );
       toast.success("Book unpublished.");
-    } catch { toast.error("Failed to unpublish."); }
+    } catch {
+      toast.error("Failed to unpublish.");
+    }
   };
 
-  const handleDelete = async (bookId) => {
+  const handleDelete = async (id) => {
+    if (!confirm("Delete this book permanently?")) return;
     try {
-      await DeleteBook(bookId);
-      setBooks((prev) => prev.filter((b) => normalize(b._id) !== bookId));
+      await DeleteBook(id);
+      setBooks((prev) => prev.filter((b) => normalize(b._id) !== id));
       toast.success("Book deleted.");
-    } catch { toast.error("Failed to delete."); }
+    } catch {
+      toast.error("Failed to delete.");
+    }
   };
 
   if (loading) {
@@ -72,91 +80,32 @@ export default function AdminBooks() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
-      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-        <h1 className="text-xl font-bold text-[#0a5c46]">Manage Books</h1>
+    <div className="max-w-6xl mx-auto space-y-6">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <h1 className="text-xl font-bold text-[#0a5c46]">All Books</h1>
         <p className="text-sm text-gray-500 mt-0.5">{books.length} books platform-wide.</p>
       </motion.div>
 
-      {/* Approval Queue */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.05 }}
-        className="bg-white rounded-2xl p-6 shadow-sm"
-      >
-        <div className="flex items-center gap-2 mb-4">
-          <ShieldCheck size={16} className="text-[#008854]" />
-          <h2 className="text-sm font-semibold text-[#0a5c46]">
-            Approval Queue
-            <span className="ml-2 text-xs font-normal text-yellow-600 bg-yellow-50 px-2 py-0.5 rounded-full">
-              {pendingBooks.length} pending
-            </span>
-          </h2>
-        </div>
-
-        {pendingBooks.length === 0 ? (
-          <p className="text-xs text-gray-400 py-6 text-center">No books pending approval. All clear!</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-xs text-gray-400 border-b border-gray-100">
-                  {["Title", "Author", "Category", "Fee", "Librarian", "Actions"].map((h) => (
-                    <th key={h} className="text-left pb-3 font-medium">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50">
-                {pendingBooks.map((b) => {
-                  const id = normalize(b._id);
-                  return (
-                    <tr key={id} className="text-gray-600">
-                      <td className="py-3 font-medium text-[#0a5c46] max-w-40 truncate">{b.title}</td>
-                      <td className="py-3 text-gray-500">{b.author}</td>
-                      <td className="py-3 text-gray-500">{b.category ?? "—"}</td>
-                      <td className="py-3">৳{b.deliveryFee}</td>
-                      <td className="py-3 text-gray-500">
-                        {typeof b.librarian === "object" ? b.librarian?.name ?? "—" : "—"}
-                      </td>
-                      <td className="py-3">
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => handleApprove(id)}
-                            className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-green-100 text-green-700 hover:bg-green-200 font-medium transition"
-                          >
-                            <CheckCircle size={13} /> Approve & Publish
-                          </button>
-                          <button
-                            onClick={() => handleDelete(id)}
-                            className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 font-medium transition"
-                          >
-                            <Trash2 size={13} /> Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </motion.div>
-
-      {/* All Books */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.05 }}
         className="bg-white rounded-2xl p-6 shadow-sm"
       >
         <div className="flex items-center gap-2 mb-4">
           <Library size={16} className="text-[#008854]" />
-          <h2 className="text-sm font-semibold text-[#0a5c46]">All Books</h2>
+          <h2 className="text-sm font-semibold text-[#0a5c46]">Book Inventory</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="text-xs text-gray-400 border-b border-gray-100">
                 {["Title", "Author", "Category", "Fee", "Status", "Actions"].map((h) => (
-                  <th key={h} className="text-left pb-3 font-medium">{h}</th>
+                  <th key={h} className="text-left pb-3 font-medium pr-4">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -165,25 +114,25 @@ export default function AdminBooks() {
                 const id = normalize(b._id);
                 return (
                   <tr key={id} className="text-gray-600">
-                    <td className="py-3 font-medium text-[#0a5c46] max-w-40 truncate">{b.title}</td>
-                    <td className="py-3 text-gray-500">{b.author}</td>
-                    <td className="py-3 text-gray-500">{b.category ?? "—"}</td>
-                    <td className="py-3">৳{b.deliveryFee}</td>
-                    <td className="py-3"><StatusBadge status={b.status} /></td>
+                    <td className="py-3 pr-4 font-medium text-[#0a5c46] max-w-40 truncate">{b.title}</td>
+                    <td className="py-3 pr-4 text-gray-500">{b.author}</td>
+                    <td className="py-3 pr-4 text-gray-500">{b.category ?? "—"}</td>
+                    <td className="py-3 pr-4">৳{b.deliveryFee}</td>
+                    <td className="py-3 pr-4"><StatusBadge status={b.status} /></td>
                     <td className="py-3">
                       <div className="flex items-center gap-2">
                         {b.status === "Published" && (
                           <button
                             onClick={() => handleUnpublish(id)}
-                            className="text-xs px-2.5 py-1 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 font-medium transition"
+                            className="text-xs px-2.5 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 font-medium transition"
                           >
                             Unpublish
                           </button>
                         )}
                         {(b.status === "Unpublished" || b.status === "Pending Approval") && (
                           <button
-                            onClick={() => handleApprove(id)}
-                            className="text-xs px-2.5 py-1 rounded-lg bg-green-100 text-green-700 hover:bg-green-200 font-medium transition"
+                            onClick={() => handlePublish(id)}
+                            className="text-xs px-2.5 py-1.5 rounded-lg bg-green-100 text-green-700 hover:bg-green-200 font-medium transition"
                           >
                             Publish
                           </button>

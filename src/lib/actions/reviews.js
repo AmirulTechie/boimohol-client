@@ -34,3 +34,9 @@ export const UpdateReview = async (id, data) => {
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 };
+
+export const GetReviewsByUser = async (userId) => {
+  const res = await fetch(`${API}/reviews/user/${userId}`, { cache: 'no-store' });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+};
