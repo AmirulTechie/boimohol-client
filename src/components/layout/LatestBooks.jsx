@@ -1,9 +1,7 @@
 // components/sections/LatestBooks.jsx
 "use client";
 
-import Link from "next/link";
 import { motion } from "motion/react";
-import { FiArrowRight } from "react-icons/fi";
 import BookCard from "@/components/shared/BookCard";
 import { GetAllBooks } from "@/lib/actions/books";
 import { useEffect, useState } from "react";

@@ -47,7 +47,7 @@ export default function BookCard({ book }) {
         <p className="text-xs text-gray-500 mt-1">{author}</p>
 
         <div className="mt-2 flex items-center justify-between">
-          <span className="text-[#008854] font-bold text-sm">৳{deliveryFee}</span>
+          <span className="text-[#008854] font-bold text-sm">${deliveryFee}</span>
           <span className="text-[10px] text-gray-400">Delivery fee</span>
         </div>
       </div>

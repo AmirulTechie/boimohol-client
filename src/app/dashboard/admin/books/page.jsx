@@ -110,7 +110,7 @@ export default function AdminBooks() {
                   const id = normalize(b._id);
                   return (
                     <tr key={id} className="text-gray-600">
-                      <td className="py-3 font-medium text-[#0a5c46] max-w-[160px] truncate">{b.title}</td>
+                      <td className="py-3 font-medium text-[#0a5c46] max-w-40 truncate">{b.title}</td>
                       <td className="py-3 text-gray-500">{b.author}</td>
                       <td className="py-3 text-gray-500">{b.category ?? "—"}</td>
                       <td className="py-3">৳{b.deliveryFee}</td>
@@ -165,7 +165,7 @@ export default function AdminBooks() {
                 const id = normalize(b._id);
                 return (
                   <tr key={id} className="text-gray-600">
-                    <td className="py-3 font-medium text-[#0a5c46] max-w-[160px] truncate">{b.title}</td>
+                    <td className="py-3 font-medium text-[#0a5c46] max-w-40 truncate">{b.title}</td>
                     <td className="py-3 text-gray-500">{b.author}</td>
                     <td className="py-3 text-gray-500">{b.category ?? "—"}</td>
                     <td className="py-3">৳{b.deliveryFee}</td>
