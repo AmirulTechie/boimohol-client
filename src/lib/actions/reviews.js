@@ -1,3 +1,5 @@
+import { getClientToken } from "@/lib/client-token";
+
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 export const GetReviewsByBook = async (bookId) => {
@@ -6,10 +8,17 @@ export const GetReviewsByBook = async (bookId) => {
   return res.json();
 };
 
+export const GetReviewsByUser = async (userId) => {
+  const res = await fetch(`${API}/reviews/user/${userId}`, { cache: 'no-store' });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+};
+
 export const PostReview = async (data) => {
+  const token = await getClientToken();
   const res = await fetch(`${API}/reviews`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: { 'content-type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify(data),
   });
   if (!res.ok) {
@@ -20,23 +29,22 @@ export const PostReview = async (data) => {
 };
 
 export const DeleteReview = async (id) => {
-  const res = await fetch(`${API}/reviews/${id}`, { method: 'DELETE' });
-  if (!res.ok) throw new Error(await res.text());
-  return res.json();
-};
-
-export const UpdateReview = async (id, data) => {
+  const token = await getClientToken();
   const res = await fetch(`${API}/reviews/${id}`, {
-    method: 'PATCH',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(data),
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 };
 
-export const GetReviewsByUser = async (userId) => {
-  const res = await fetch(`${API}/reviews/user/${userId}`, { cache: 'no-store' });
+export const UpdateReview = async (id, data) => {
+  const token = await getClientToken();
+  const res = await fetch(`${API}/reviews/${id}`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify(data),
+  });
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 };
