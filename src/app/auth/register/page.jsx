@@ -258,7 +258,7 @@ export default function RegisterPage() {
                 </button>
               </div>
               {watch("password") && (() => {
-                const s = getStrength(watch("password"));
+                const s = getStrength(  ("password"));
                 return (
                   <div className="mt-2">
                     <div className="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
