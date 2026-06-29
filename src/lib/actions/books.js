@@ -18,6 +18,7 @@ export const GetBrowseBooks = async (params = {}) => {
   if (availability !== 'All') query.set('availability', availability);
   query.set('page', page);
   query.set('limit', limit);
+  query.set('status', 'Published');   // ← add this
   const res = await fetch(`${API}/books?${query.toString()}`, { cache: 'no-store' });
   if (!res.ok) throw new Error(await res.text());
   return res.json();

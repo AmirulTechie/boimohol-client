@@ -45,7 +45,7 @@ export default function AdminTransactions() {
         <h1 className="text-xl font-bold text-[#0a5c46]">All Transactions</h1>
         <p className="text-sm text-gray-500 mt-0.5">
           {deliveries.length} transactions · Total{" "}
-          <span className="text-[#008854] font-semibold">৳{total.toFixed(2)}</span>
+          <span className="text-[#008854] font-semibold">${total.toFixed(2)}</span>
         </p>
       </motion.div>
 

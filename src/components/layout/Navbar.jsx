@@ -120,10 +120,6 @@ export default function Navbar() {
           )}
 
           <div className="flex items-center gap-4 shrink-0">
-  <Link href="/cart" className="relative flex items-center text-white hover:text-green-200 transition-colors" aria-label="Cart">
-    <GiSchoolBag size={24} />
-    <span className="absolute -top-2 -right-2 w-4 h-4 bg-white text-[#0F6E56] text-[10px] font-semibold rounded-full flex items-center justify-center">0</span>
-  </Link>
 
   {isPending ? (
     <div className="hidden md:flex items-center gap-2">
@@ -131,7 +127,7 @@ export default function Navbar() {
       <div className="w-24 h-7 bg-white/20 rounded-lg animate-pulse" />
     </div>
   ) : user ? (
-    <Link href={'/profile/user'} className="hidden md:flex items-center gap-1.5 text-sm font-medium text-white hover:text-green-200 transition-colors">
+    <Link href={'/dashboard/account'} className="hidden md:flex items-center gap-1.5 text-sm font-medium text-white hover:text-green-200 transition-colors">
   {user.image ? (
     <Image
       src={user.image}

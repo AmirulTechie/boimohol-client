@@ -67,18 +67,14 @@ export default function BookDetailsPage({ params }) {
   // ── Derive book data ──────────────────────────────────────────────────────
 
   const book = books.find((b) => toSlug(b.title) === slug);
+  console.log("BOOK:", book);
   const bookId = book ? normalize(book._id) : null;
 
-  const librarianId = book?.librarian
-    ? typeof book.librarian === "object" && book.librarian !== null
-      ? normalize(book.librarian._id)
-      : normalize(book.librarian)
-    : null;
+  const librarianId = book?.librarianId
+  ? normalize(book.librarianId)
+  : null;
 
-  const librarianName =
-    book?.librarian && typeof book.librarian === "object" && book.librarian.name
-      ? book.librarian.name
-      : "Unknown";
+const librarianName = book?.librarianName || "Unknown";
 
   const isLibrarian = !!user?.id && !!librarianId && user.id === librarianId;
   const isCheckedOut = book?.status === "Checked Out";

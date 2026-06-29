@@ -140,7 +140,7 @@ export default function AdminOverview() {
           },
           {
             label: "Total Revenue",
-            value: `৳${totalRevenue.toFixed(2)}`,
+            value: `$${totalRevenue.toFixed(2)}`,
             icon: BadgeDollarSign,
             color: "bg-yellow-100 text-yellow-700",
           },
