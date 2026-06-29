@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { BookOpen, BookMarked, CheckCircle2 } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
 const roles = [
@@ -27,24 +27,45 @@ export default function SelectRolePage() {
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { data: session, isPending } = useSession();
+  useEffect(() => {
+  if (isPending) return;
 
+  // Not logged in
+  if (!session) {
+    router.replace("/auth/login");
+    return;
+  }
+
+  // User already completed onboarding
+  if (session.user.role === "user" || session.user.role === "librarian") {
+    router.replace("/");
+  }
+}, [session, isPending, router]);
   const handleConfirm = async () => {
-    if (!selected) return;
-    setLoading(true);
-    try {
-      const { error } = await authClient.updateUser({ role: selected });
-      if (error) {
-        toast.error(error.message || "Failed to set role.");
-        return;
-      }
-      toast.success("All set! Welcome to Boimohol.");
-      router.push("/");
-    } catch (err) {
-      toast.error("Something went wrong.");
-    } finally {
-      setLoading(false);
+  if (!selected) return;
+
+  setLoading(true);
+
+  try {
+    const { error } = await authClient.updateUser({
+      role: selected,
+    });
+
+    if (error) {
+      toast.error(error.message || "Failed to set role.");
+      return;
     }
-  };
+
+    toast.success("Welcome to Boimohol!");
+
+    router.replace("/");
+  } catch (err) {
+    toast.error("Something went wrong.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16">

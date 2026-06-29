@@ -74,8 +74,15 @@ export default function RegisterPage() {
   };
 
   const handleGoogleSignIn = async () => {
-    // TODO: Better Auth Google OAuth
-  };
+  const { error } = await authClient.signIn.social({
+    provider: "google",
+    callbackURL: "/auth/select-role",
+  });
+
+  if (error) {
+    toast.error(error.message || "Google sign in failed.");
+  }
+};
 
   return (
     <div className="min-h-screen bg-[#f5f5eb] flex">
