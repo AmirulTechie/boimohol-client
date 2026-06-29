@@ -1,6 +1,6 @@
 import { getClientToken } from "@/lib/client-token";
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API = process.env.NEXT_PUBLIC_API_URL;
 
 export const GetAllBooks = async () => {
   const res = await fetch(`${API}/books/all`, { cache: 'no-store' });
