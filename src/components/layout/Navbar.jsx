@@ -173,7 +173,7 @@ export default function Navbar() {
                       className="rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-[30px] h-[30px] rounded-full bg-white/20 flex items-center justify-center">
+                    <div className="w-7.5 h-7.5 rounded-full bg-white/20 flex items-center justify-center">
                       <LuUser size={15} className="text-white" />
                     </div>
                   )}
