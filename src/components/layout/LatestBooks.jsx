@@ -18,7 +18,9 @@ export default function LatestBooks() {
     loadBooks();
   }, []);
 
-  const latest = books.slice(0, 5);
+  const latest = books
+  .filter(b => b.status === 'Published')
+  .slice(0, 5);
   return (
     <section className="py-16">
       <div className="max-w-6xl mx-auto px-4">
