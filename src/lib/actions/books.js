@@ -43,7 +43,7 @@ export const CreateBook = async (data) => {
 
 export const UpdateBook = async (id, data) => {
   const token = await getClientToken();
-  const res = await fetch(`${API}/books/${id}`, {
+  const res = await fetch(`${API}/books/${id}/status`, {
     method: 'PATCH',
     headers: { 'content-type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify(data),
@@ -51,7 +51,6 @@ export const UpdateBook = async (id, data) => {
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 };
-
 export const DeleteBook = async (id) => {
   const token = await getClientToken();
   const res = await fetch(`${API}/books/${id}`, {
