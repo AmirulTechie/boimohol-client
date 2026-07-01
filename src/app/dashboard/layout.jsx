@@ -21,7 +21,7 @@ const navByRole = {
   ],
   librarian: [
     { label: "Overview",          href: "/dashboard/librarian",          icon: LayoutDashboard },
-    { label: "Manage Books",      href: "/dashboard/librarian/books",    icon: Library },
+    { label: "Manage Inventory",      href: "/dashboard/librarian/books",    icon: Library },
     { label: "Delivery Requests", href: "/dashboard/librarian/requests", icon: Truck },
   ],
   admin: [

@@ -5,9 +5,9 @@ import { Award, PackageCheck } from "lucide-react";
 import Image from "next/image";
 
 const topLibrarians = [
-  { id: 1, name: "Rafiqul Islam", deliveries: 342, avatar: "https://i.ibb.co/68vD18M/avatar1.jpg" },
-  { id: 2, name: "Sadia Rahman", deliveries: 289, avatar: "https://i.ibb.co/RzG324f/avatar2.jpg" },
-  { id: 3, name: "Tanvir Ahmed", deliveries: 256, avatar: "https://i.ibb.co/3sX8b9p/avatar3.jpg" },
+  { id: 1, name: "Rafiqul Islam", deliveries: 30, avatar: "https://i.ibb.co/LX4tkP2y/Ezio.jpg" },
+  { id: 2, name: "Sadia Rahman", deliveries: 24, avatar: "https://i.ibb.co/x832bQ1n/Ellie.jpg" },
+  { id: 3, name: "Tanvir Ahmed", deliveries: 16, avatar: "https://i.ibb.co/gFd33nZ6/Arthur.png"},
 ];
 
 export default function TopLibrarians() {

@@ -64,58 +64,36 @@ export default function AdminTransactions() {
           <p className="text-sm text-gray-400 text-center py-10">No transactions yet.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-xs text-gray-400 border-b border-gray-100">
-                  {["Transaction ID", "Book", "User", "Amount", "Status", "Date"].map((h) => (
-                    <th key={h} className="text-left pb-3 font-medium pr-4">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50">
-                {deliveries.map((d) => {
-                  const id = normalize(d._id);
-                  const shortId = id.slice(-8).toUpperCase();
-                  const date = d.createdAt
-                    ? new Date(d.createdAt).toLocaleDateString("en-GB", {
-                        day: "numeric", month: "short", year: "numeric",
-                      })
-                    : "—";
+           <table className="w-full text-sm">
+  <thead>
+    <tr className="text-xs text-gray-400 border-b border-gray-100">
+      {["Transaction ID", "User Email", "Librarian Email", "Amount", "Date"].map((h) => (
+        <th key={h} className="text-left pb-3 font-medium pr-4">{h}</th>
+      ))}
+    </tr>
+  </thead>
+  <tbody className="divide-y divide-gray-50">
+    {deliveries.map((d) => {
+      const id = normalize(d._id);
+      const shortId = id.slice(-8).toUpperCase();
+      const date = d.createdAt
+        ? new Date(d.createdAt).toLocaleDateString("en-GB", {
+            day: "numeric", month: "short", year: "numeric",
+          })
+        : "—";
 
-                  const statusColors = {
-                    Pending:    "bg-yellow-100 text-yellow-700",
-                    Dispatched: "bg-blue-100 text-blue-700",
-                    Delivered:  "bg-green-100 text-green-700",
-                  };
-
-                  return (
-                    <tr key={id} className="text-gray-600">
-                      <td className="py-3 pr-4 font-mono text-xs text-gray-400">
-                        #{shortId}
-                      </td>
-                      <td className="py-3 pr-4 text-gray-700 font-medium max-w-40 truncate">
-                        {d.bookTitle || "—"}
-                      </td>
-                      <td className="py-3 pr-4 text-gray-500 text-xs">
-                        <div>{d.userName || "—"}</div>
-                        <div className="text-gray-400">{d.userEmail || ""}</div>
-                      </td>
-                      <td className="py-3 pr-4 font-semibold text-[#008854]">
-                        ${d.deliveryFee ?? "—"}
-                      </td>
-                      <td className="py-3 pr-4">
-                        <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-                          statusColors[d.status] || "bg-gray-100 text-gray-500"
-                        }`}>
-                          {d.status}
-                        </span>
-                      </td>
-                      <td className="py-3 text-gray-400 text-xs whitespace-nowrap">{date}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+      return (
+        <tr key={id} className="text-gray-600">
+          <td className="py-3 pr-4 font-mono text-xs text-gray-400">#{shortId}</td>
+          <td className="py-3 pr-4 text-gray-500 text-xs">{d.userEmail || "—"}</td>
+          <td className="py-3 pr-4 text-gray-500 text-xs">{d.librarianEmail || "—"}</td>
+          <td className="py-3 pr-4 font-semibold text-[#008854]">${d.deliveryFee ?? "—"}</td>
+          <td className="py-3 text-gray-400 text-xs whitespace-nowrap">{date}</td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>
           </div>
         )}
       </motion.div>

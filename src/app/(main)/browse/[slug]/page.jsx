@@ -67,7 +67,6 @@ export default function BookDetailsPage({ params }) {
   // ── Derive book data ──────────────────────────────────────────────────────
 
   const book = books.find((b) => toSlug(b.title) === slug);
-  console.log("BOOK:", book);
   const bookId = book ? normalize(book._id) : null;
 
   const librarianId = book?.librarianId
