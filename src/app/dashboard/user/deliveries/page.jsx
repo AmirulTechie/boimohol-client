@@ -181,7 +181,7 @@ export default function DeliveriesPage() {
                       {d.bookTitle ?? d.title ?? "—"}
                     </td>
                     <td className="py-3">
-                      {d.deliveryFee != null ? `৳${d.deliveryFee}` : "—"}
+                      {d.deliveryFee != null ? `$${d.deliveryFee}` : "—"}
                     </td>
                     <td className="py-3 text-gray-400 text-xs">
                       {d.createdAt

@@ -168,7 +168,7 @@ export default function UserDashboard() {
             />
             <StatCard
               label="Total Spent on Fees"
-              value={`৳${stats.totalSpent}`}
+              value={`$${stats.totalSpent}`}
               icon={BadgeDollarSign}
               color="bg-blue-100 text-blue-700"
             />
@@ -207,7 +207,7 @@ export default function UserDashboard() {
                   fontSize: 12, borderRadius: 10,
                   border: "none", boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
                 }}
-                formatter={(v) => [`৳${v}`, "Spent"]}
+                formatter={(v) => [`$${v}`, "Spent"]}
               />
               <Area
                 type="monotone"
@@ -248,7 +248,7 @@ export default function UserDashboard() {
                       {d.bookTitle ?? d.title ?? "—"}
                     </td>
                     <td className="py-3">
-                      {d.deliveryFee != null ? `৳${d.deliveryFee}` : "—"}
+                      {d.deliveryFee != null ? `$${d.deliveryFee}` : "—"}
                     </td>
                     <td className="py-3 text-gray-400">
                       {d.createdAt

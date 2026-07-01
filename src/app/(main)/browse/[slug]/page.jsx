@@ -317,7 +317,7 @@ const librarianName = book?.librarianName || "Unknown";
                         </p>
                         <p className="text-xs text-gray-400 truncate">{b.author}</p>
                         <p className="text-xs text-[#008854] font-medium mt-0.5">
-                          ৳{b.deliveryFee}
+                          ${b.deliveryFee}
                         </p>
                       </div>
                     </Link>
@@ -357,7 +357,7 @@ const librarianName = book?.librarianName || "Unknown";
               {[
                 { icon: User, label: "Author", value: book.author },
                 { icon: Tag, label: "Category", value: book.category ?? "—" },
-                { icon: Truck, label: "Delivery Fee", value: `৳${book.deliveryFee}` },
+                { icon: Truck, label: "Delivery Fee", value: `$${book.deliveryFee}` },
                 {
                   icon: CalendarDays,
                   label: "Date Added",
@@ -405,7 +405,7 @@ const librarianName = book?.librarianName || "Unknown";
                     ? "Redirecting to Stripe..."
                     : isUnavailable
                     ? "Currently Unavailable"
-                    : `Request Delivery — ৳${book.deliveryFee}`}
+                    : `Request Delivery — $${book.deliveryFee}`}
                 </motion.button>
               )}
 

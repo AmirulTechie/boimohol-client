@@ -1,7 +1,14 @@
 import BrowseClient from "./BrowseClient";
-import { GetAllBooks } from "@/lib/actions/books";
+import { GetBrowseBooks } from "@/lib/actions/books";
 
 export default async function BrowsePage() {
-  const books = await GetAllBooks();
-  return <BrowseClient books={books} />;
+  const data = await GetBrowseBooks({ page: 1, limit: 10 });
+
+  return (
+    <BrowseClient
+      initialBooks={data.books}
+      initialTotal={data.total}
+      initialTotalPages={data.totalPages}
+    />
+  );
 }

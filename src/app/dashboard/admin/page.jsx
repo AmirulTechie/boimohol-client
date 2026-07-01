@@ -219,7 +219,7 @@ export default function AdminOverview() {
                   border: "none",
                   boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
                 }}
-                formatter={(v) => [`৳${v}`, "Revenue"]}
+                formatter={(v) => [`$${v}`, "Revenue"]}
               />
               <Area
                 type="monotone"

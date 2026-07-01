@@ -80,7 +80,7 @@ function TopRatedAside({ books }) {
                           <span key={i} className="text-yellow-400 text-[10px]">★</span>
                         ))}
                       </div>
-                      <p className="text-[#008854] font-bold text-xs mt-0.5">৳{book.deliveryFee}</p>
+                      <p className="text-[#008854] font-bold text-xs mt-0.5">${book.deliveryFee}</p>
                     </div>
                   </div>
                 ))}

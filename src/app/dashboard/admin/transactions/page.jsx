@@ -101,7 +101,7 @@ export default function AdminTransactions() {
                         <div className="text-gray-400">{d.userEmail || ""}</div>
                       </td>
                       <td className="py-3 pr-4 font-semibold text-[#008854]">
-                        ৳{d.deliveryFee ?? "—"}
+                        ${d.deliveryFee ?? "—"}
                       </td>
                       <td className="py-3 pr-4">
                         <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${

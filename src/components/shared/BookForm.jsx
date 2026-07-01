@@ -99,7 +99,7 @@ const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
           {[
             { name: "title", label: "Title", type: "text", placeholder: "The Alchemist" },
             { name: "author", label: "Author", type: "text", placeholder: "Paulo Coelho" },
-            { name: "deliveryFee", label: "Delivery Fee (৳)", type: "number", placeholder: "60" },
+            { name: "deliveryFee", label: "Delivery Fee ($)", type: "number", placeholder: "60" },
           ].map((field) => (
             <div key={field.name}>
               <label className="text-xs font-medium text-gray-600 block mb-1.5">{field.label}</label>

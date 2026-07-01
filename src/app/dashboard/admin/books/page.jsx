@@ -117,7 +117,7 @@ export default function AdminBooks() {
                     <td className="py-3 pr-4 font-medium text-[#0a5c46] max-w-40 truncate">{b.title}</td>
                     <td className="py-3 pr-4 text-gray-500">{b.author}</td>
                     <td className="py-3 pr-4 text-gray-500">{b.category ?? "—"}</td>
-                    <td className="py-3 pr-4">৳{b.deliveryFee}</td>
+                    <td className="py-3 pr-4">${b.deliveryFee}</td>
                     <td className="py-3 pr-4"><StatusBadge status={b.status} /></td>
                     <td className="py-3">
                       <div className="flex items-center gap-2">

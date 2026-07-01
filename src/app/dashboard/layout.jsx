@@ -29,7 +29,7 @@ const navByRole = {
     { label: "All Users",     href: "/dashboard/admin/users",       icon: Users },
     { label: "All Books",     href: "/dashboard/admin/books",       icon: Library },
     { label: "Approvals",     href: "/dashboard/admin/approvals",   icon: ShieldCheck },
-    { label: "All Deliveries", href: "/dashboard/admin/deliveries", icon: Truck },
+    { label: "All Transactions", href: "/dashboard/admin/transactions", icon: Truck },
   ],
 };
 

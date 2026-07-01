@@ -18,11 +18,13 @@ export const auth = betterAuth({
     client
   }),
   user: {
-       additionalFields: {
-          role: {
-              type: "string",
-              default: null,
-            } 
-        }
-    }
+  additionalFields: {
+    role: {
+  type: "string",
+  required: false,
+  input: true,
+  defaultValue: null,
+}
+  }
+}
 });
